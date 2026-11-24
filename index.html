@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Affiliate Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#fff;font-family:Arial,sans-serif}
+header{padding:22px 7%;border-bottom:1px solid #29334b}
+.logo{font-size:25px;font-weight:bold;color:#8b9cff}
+main{max-width:1050px;margin:35px auto;padding:20px}
+h1{font-size:32px}
+.sub{color:#9ba9c5}
+.balance{background:#192544;padding:18px;border-radius:12px;margin:25px 0}
+.balance strong{color:#70e5b0;font-size:25px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+button,select{cursor:pointer;border:0;border-radius:8px;padding:12px}
+.tab{background:#202c48;color:white}
+.tab.active{background:#625cf5}
+.panel{background:#151e35;padding:24px;border-radius:14px}
+label{display:block;margin:15px 0 8px}
+input,textarea,select{width:100%;background:#0d1529;color:white;border:1px solid #354362;padding:13px;border-radius:8px}
+textarea{min-height:130px;resize:vertical}
+.generate{background:#695ef5;color:white;width:100%;margin-top:20px;font-weight:bold}
+.result{margin-top:20px;background:#0d1529;padding:18px;border-radius:8px;white-space:pre-wrap;min-height:60px}
+footer{text-align:center;color:#75819b;padding:30px}
+</style>
+</head>
+<body>
+<header><div class="logo">✦ AI Affiliate Studio</div></header>
+<main>
+<h1>Trợ lý AI Affiliate</h1>
+<p class="sub">Công cụ hỗ trợ sáng tạo nội dung bán hàng thông minh.</p>
+
+<div class="balance">
+  Số dư thử nghiệm<br>
+  <strong id="tokens">1000 Token</strong>
+</div>
+
+<div class="tabs">
+<button class="tab active" onclick="changeTab('review',this)">Viết Review</button>
+<button class="tab" onclick="changeTab('video',this)">Kịch bản Video</button>
+<button class="tab" onclick="changeTab('translate',this)">Dịch Trung - Việt</button>
+</div>
+
+<section class="panel">
+<h2 id="heading">Viết nội dung Review Affiliate</h2>
+<label>Nội dung hoặc tên sản phẩm</label>
+<textarea id="input" placeholder="Ví dụ: Cây lau nhà tự vắt thông minh..."></textarea>
+<label>Phong cách nội dung</label>
+<select id="style">
+<option>Thu hút, tự nhiên</option>
+<option>Review chân thực</option>
+<option>Ngắn gọn, dễ hiểu</option>
+<option>Chuyên nghiệp</option>
+</select>
+<button class="generate" onclick="generate()">✦ Tạo nội dung</button>
+<div class="result" id="result">Nội dung AI sẽ xuất hiện tại đây.</div>
+</section>
+</main>
+<footer>AI Affiliate Studio © 2026</footer>
+
+<script>
+let current="review";
+let tokens=1000;
+
+function changeTab(type,button){
+ current=type;
+ document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ const titles={
+ review:"Viết nội dung Review Affiliate",
+ video:"Tạo kịch bản Video bán hàng",
+ translate:"Dịch tiếng Trung sang tiếng Việt"
+ };
+ document.getElementById("heading").textContent=titles[type];
+ document.getElementById("result").textContent="Nhập nội dung để bắt đầu.";
+}
+
+function generate(){
+ const input=document.getElementById("input").value.trim();
+ if(!input){alert("Bạn hãy nhập nội dung trước!");return;}
+ if(tokens<10){alert("Bạn đã hết token thử nghiệm!");return;}
+ tokens-=10;
+ document.getElementById("tokens").textContent=tokens+" Token";
+ const result=document.getElementById("result");
+ if(current==="review"){
+ result.textContent="GIỚI THIỆU SẢN PHẨM\n"+input+
+ "\n\nĐây là sản phẩm đáng để tìm hiểu nếu bạn đang cần một giải pháp phù hợp. Hãy xem thêm thông tin và lựa chọn theo nhu cầu của mình.";
+ }else if(current==="video"){
+ result.textContent="KỊCH BẢN VIDEO\n\nMỞ ĐẦU: Bạn đã biết đến sản phẩm này chưa?\n\nGIỚI THIỆU: "+input+
+ "\n\nNỘI DUNG: Giới thiệu công dụng và cách sử dụng.\n\nKẾT: Tìm hiểu thêm thông tin sản phẩm nhé!";
+ }else{
+ result.textContent="BẢN DỊCH THỬ NGHIỆM:\n"+input+
+ "\n\nChức năng dịch AI thật sẽ được kết nối ở phiên bản tiếp theo.";
+ }
+}
+</script>
+</body>
+</html>
